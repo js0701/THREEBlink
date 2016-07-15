@@ -1,0 +1,8 @@
+[
+   GarbageCollected,
+   NoInterfaceObject
+ ] interface Bullet {
+    void runTest(); //main entrance of test
+    [Custom=Getter] readonly attribute Matrix4B   Matrix4;
+};
+
