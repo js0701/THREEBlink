@@ -6,40 +6,10 @@
 #include "wtf/Vector.h"
 #include "wtf/HashMap.h"
 #include "wtf/text/StringHash.h"
+#include "../Impl/threeBaseObj.h"
 
-//Let
 
 namespace blink {
-
-
-class threeBlinkWrapper;
-
-class threeBlinkWrapperRepo
-{
-
-   public:
-       static void setWrapperImplPair(void* implPtr, threeBlinkWrapper* pWrapper)
-        {
-            m_repoMap.set(implPtr, pWrapper);
-        }
-
-       static void* getWrapperForImpl(void* implPtr)
-        {
-            if(m_repoMap.contains(implPtr))
-                return  m_repoMap.get(implPtr);
-            else
-                return NULL;
-        }
-
-       static void removeWrapperForImpl(void* implPtr)
-        {
-            m_repoMap.remove(implPtr);
-        }
-
-   private:
-
-       static HashMap<void*, threeBlinkWrapper*> m_repoMap;
-};
 
 
 class threeBlinkWrapper : public RefCounted<threeBlinkWrapper>, public ScriptWrappable {
@@ -49,31 +19,27 @@ class threeBlinkWrapper : public RefCounted<threeBlinkWrapper>, public ScriptWra
 public:
     threeBlinkWrapper() {
         m_impl = NULL;
-        m_isOwner = false;
      }
     virtual ~threeBlinkWrapper() {
         if(m_impl)
         {
-            //m_impl->setWrapper(NULL);
-            threeBlinkWrapperRepo::removeWrapperForImpl(m_impl);
             //if(m_isOwner)
             //   delete m_impl;
-            delete m_impl;
+
+            m_impl->setWrapper(NULL);
+            m_impl->deref();
         }
         m_impl = NULL;
      }
 
-    void  setImpl(void* impl) {
+    void  setImpl(three::BaseObj* impl) {
         m_impl = impl;
-        //if(m_impl != NULL)
-        //{
-        //    m_impl->setWrapper((void*)this);
-        //}
-        threeBlinkWrapperRepo::setWrapperImplPair(m_impl, this); //the` map is for looking for
+        impl->ref();
+        impl->setWrapper((void*) this);
      }
 
 
-    void* getImpl()           { return m_impl; }
+    three::BaseObj* getImpl() { return m_impl; }
 
     void setRef(String name, threeBlinkWrapper* pObj) {
         if(!m_refedWrappersMap.contains(name))
@@ -94,7 +60,7 @@ public:
     }
 
 protected:
-    three:: baseObj* m_impl; // Should  the implementation also  refcounted? as in COCOS2D?
+    three::BaseObj* m_impl; // Should  the implementation also  refcounted? as in COCOS2D?
 
     HashMap<String, RefPtr<threeBlinkWrapper>> m_refedWrappersMap;
     Vector<RefPtr<threeBlinkWrapper>> m_refedWrappersVector;

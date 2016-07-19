@@ -2,21 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GlobalBullet_h
-#define GlobalBullet_h
+#ifndef GlobalTHREE_h
+#define GlobalTHREE_h
 
 namespace blink {
 
-class Bullet;
+class THREE;
 class DOMWindow;
 class WorkerGlobalScope;
 
-class GlobalBullet {
+class GlobalTHREE {
 public:
-    static Bullet* bullet(DOMWindow&);
-    static Bullet* bullet(WorkerGlobalScope&);
+    static THREE* three(DOMWindow&);
+    static THREE* three(WorkerGlobalScope&);
 };
 
 } // namespace blink
 
-#endif // GlobalBullet_h
+#endif // GlobalTHREE_h

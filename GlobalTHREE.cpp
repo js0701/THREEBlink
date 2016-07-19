@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 
 #include "config.h"
-#include "modules/three/GlobalTHREE.h"
+#include "modules/THREE/GlobalTHREE.h"
 
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
 #include "core/workers/WorkerGlobalScope.h"
-#include "modules/three/THREE.h"
+#include "modules/THREE/THREE.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/DatabaseIdentifier.h"

@@ -8,7 +8,7 @@
 #define ATTRIBUTE_GETTER_CUSTOM(_class_) \
     void V8THREE:: FUNC_NAME(_class_, AttributeGetterCustom) (v8::FunctionCallbackInfo<v8::Value> const& info) { \
         v8::Isolate* isolate = info.GetIsolate(); \
-        v8::Handle<v8::FunctionTemplate> functionTemplate = V8bt##_class_##B::domTemplate(isolate); \
+        v8::Handle<v8::FunctionTemplate> functionTemplate = V8##_class_##B::domTemplate(isolate); \
         v8::Handle<v8::Function> v8Function = functionTemplate->GetFunction(); \
         v8SetReturnValue(info, v8Function); \
     }
@@ -20,11 +20,10 @@
 namespace blink {
 
 
-   HashMap<void*, threeBlinkWrapper*> threeBlinkWrapperRepo::m_repoMap;
+   //HashMap<void*, threeBlinkWrapper*> threeBlinkWrapperRepo::m_repoMap;
 
    void THREE::runTest()
    {
-      btVector3B::runTest();
    }
 
    ATTRIBUTE_GETTER_CUSTOM(Matrix4)
